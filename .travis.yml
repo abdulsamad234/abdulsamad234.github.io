@@ -1,0 +1,15 @@
+language: ruby
+services: docker
+rvm:
+  - 2.3.3
+install:
+  - bundle install
+  - gem install danger
+script:
+  - danger --verbose
+  - bundle exec jekyll build
+  - docker run --volume=$(pwd):/app --workdir=/app coala/base coala -C
+branches:
+  only:
+    - gh-pages  # Must be appear explicitly
+    - /./  # Allows builds for any other branch name
